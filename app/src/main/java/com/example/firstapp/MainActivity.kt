@@ -23,8 +23,6 @@ class MainActivity : AppCompatActivity() {
         digits.setOnClickListeners()
         var counter = getNumber()
 
-//        val plusButton = findViewById<Button>(R.id.plusButton)
-//        val minusButton = findViewById<Button>(R.id.minusButton)
         val resultTextView = findViewById<TextView>(R.id.myTextView)
 
         resultTextView.text = "$counter"
@@ -34,37 +32,26 @@ class MainActivity : AppCompatActivity() {
             resultTextView.text = "$counter"
         }
 
-//        plusButton.setOnClickListener {
-//            counter++
-//            changeResultView()
-//        }
-
-//        minusButton.setOnClickListener {
-//            counter--
-//            changeResultView()
-//        }
-
     }
 
-    class DigitButtons(val activity: AppCompatActivity) {
-        val oneButton = activity.findViewById<Button>(R.id.oneButton)
-        val twoButton = activity.findViewById<Button>(R.id.twoButton)
-        val threeButton = activity.findViewById<Button>(R.id.threeButton)
-        val fourButton = activity.findViewById<Button>(R.id.fourButton)
-        val fiveButton = activity.findViewById<Button>(R.id.fiveButton)
-        val sixButton = activity.findViewById<Button>(R.id.sixButton)
-        val sevenButton = activity.findViewById<Button>(R.id.sevenButton)
-        val eightButton = activity.findViewById<Button>(R.id.eightButton)
-        val nineButton = activity.findViewById<Button>(R.id.nineButton)
-        val ceButton = activity.findViewById<Button>(R.id.clearButton)
-        var textView = activity.findViewById<TextView>(R.id.myTextView)
+    class DigitButtons(private val activity: AppCompatActivity) {
+        private val oneButton: = activity.findViewById<Button>(R.id.oneButton)
+        private val twoButton = activity.findViewById<Button>(R.id.twoButton)
+        private val threeButton = activity.findViewById<Button>(R.id.threeButton)
+        private val fourButton = activity.findViewById<Button>(R.id.fourButton)
+        private val fiveButton = activity.findViewById<Button>(R.id.fiveButton)
+        private val sixButton = activity.findViewById<Button>(R.id.sixButton)
+        private val sevenButton = activity.findViewById<Button>(R.id.sevenButton)
+        private val eightButton = activity.findViewById<Button>(R.id.eightButton)
+        private val nineButton = activity.findViewById<Button>(R.id.nineButton)
+        private val ceButton = activity.findViewById<Button>(R.id.clearButton)
+        private val textView = activity.findViewById<TextView>(R.id.myTextView)
 
-        var currentPrice = 0
+        private var currentPrice = 0
         var newPrice = 0
 
-        fun updatePrices(newDigitString: String) {
-            val currentPriceString = "${currentPrice}${newDigitString}"
-            Log.d("1", currentPriceString)
+        private fun updatePrices(newDigit: Int) {
+            val currentPriceString = "${currentPrice}${newDigit}"
             if (currentPriceString.length > 8) return
             currentPrice = currentPriceString.toInt()
             textView.text = "$currentPrice"
@@ -76,31 +63,31 @@ class MainActivity : AppCompatActivity() {
                 textView.text = "0"
             }
             oneButton.setOnClickListener {
-                updatePrices("1")
+                updatePrices(1)
             }
             twoButton.setOnClickListener {
-                updatePrices("2")
+                updatePrices(2)
             }
             threeButton.setOnClickListener {
-                updatePrices("3")
+                updatePrices(3)
             }
             fourButton.setOnClickListener {
-                updatePrices("4")
+                updatePrices(4)
             }
             fiveButton.setOnClickListener {
-                updatePrices("5")
+                updatePrices(5)
             }
             sixButton.setOnClickListener {
-                updatePrices("6")
+                updatePrices(6)
             }
             sevenButton.setOnClickListener {
-                updatePrices("7")
+                updatePrices(7)
             }
             eightButton.setOnClickListener {
-                updatePrices("8")
+                updatePrices(8)
             }
             nineButton.setOnClickListener {
-                updatePrices("9")
+                updatePrices(9)
             }
         }
     }
