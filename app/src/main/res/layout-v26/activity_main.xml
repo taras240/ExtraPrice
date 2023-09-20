@@ -31,7 +31,7 @@
         android:paddingHorizontal="20dp"
         android:text="0"
         android:textAlignment="textEnd"
-        android:textColor="@android:color/holo_orange_light"
+        android:textColor="#ff6600"
         android:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/countGroup"
         app:layout_constraintRight_toRightOf="parent"
