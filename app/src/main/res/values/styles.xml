@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="mainColor">#ff6600</color>
+    <color name="mainTextColor">#eeeeee</color>
 
     <style name="digit_button_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:backgroundTint">@android:color/black</item>
-        <item name="android:backgroundTintMode">add</item>
+        <item name="backgroundTint">@color/black</item>
+        <item name="backgroundTintMode">add</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">36sp</item>
+    </style>
+    <style name="radioButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="buttonTint">@color/mainColor</item>
     </style>
 </resources>

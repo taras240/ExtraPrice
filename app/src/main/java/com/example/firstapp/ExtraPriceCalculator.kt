@@ -1,5 +1,6 @@
 package com.example.firstapp
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -14,6 +15,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.toColor
 import com.example.firstapp.databinding.ActivityMainBinding
 
 class ExtraPriceCalculator(
@@ -107,42 +109,37 @@ class ExtraPriceCalculator(
         if (Build.VERSION.SDK_INT >= 26) {
             timer.cancel()
             timer.start()
-            vibration.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+            vibration.vibrate(VibrationEffect.createOneShot(75, VibrationEffect.DEFAULT_AMPLITUDE))
         }
     }
 
-    fun setRadioListener() {
-        binding.percentageRadioGroup.setOnCheckedChangeListener { _, checkedId ->
-            // get the radio group checked radio button
-            activity.findViewById<RadioButton>(checkedId)?.apply {
-                // show the checked radio button's text in text view
-                percentage = when (text) {
-                    "5%" -> 105
-                    "20%" -> 120
-                    "25%" -> 125
-                    "30%" -> 130
-                    "56%" -> 156
-                    else -> 100
-                }
+    fun setRadioListener() = with(binding) {
+        percentageRadioGroup.setOnCheckedChangeListener { _, _ ->
+            percentage = when {
+                radio5.isChecked -> 105
+                radio20.isChecked -> 120
+                radio25.isChecked -> 125
+                radio30.isChecked -> 130
+                radio56.isChecked -> 156
+                else -> 100
             }
             saveNumber(percentageKey, percentage)
             calculateNewPrice()
             vibrate()
-
         }
     }
 
     private fun setTextviewInactiveStyle(textView: TextView) {
-        textView.setBackgroundColor(Color.parseColor("#000000"))
-        textView.setTextColor(Color.parseColor("#eeeeee"))
+        textView.setBackgroundResource(R.color.black)
+        textView.setTextColor(activity.resources.getColor(R.color.mainTextColor))
     }
 
     private fun setTextviewActiveStyle(textView: TextView) {
-        textView.setBackgroundColor(Color.parseColor("#ff6600"))
-        textView.setTextColor(Color.parseColor("#000000"))
+        textView.setBackgroundResource(R.color.mainColor)
+        textView.setTextColor(activity.resources.getColor(R.color.black))
     }
 
-    fun setOnClickListeners()= with(binding) {
+    fun setOnClickListeners() = with(binding) {
         enteredPriceTextView?.setOnClickListener {
             activeInputField = ActiveInput.PRICE_TEXTVIEW
             setTextviewInactiveStyle(enteredCountTextView)
