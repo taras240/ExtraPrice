@@ -10,7 +10,7 @@
 
 
     <TextView
-        android:id="@+id/myTextView"
+        android:id="@+id/enteredPriceTextView"
 
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -35,7 +35,7 @@
         android:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/countGroup"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/enteredPriceTextView" />
 
     <LinearLayout
         android:id="@+id/countGroup"
@@ -220,7 +220,7 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/clearButton"
+                android:id="@+id/ceButton"
                 style="@style/digit_button_style"
                 android:text="CE"
                 android:textColor="#ff6600"

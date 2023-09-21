@@ -14,36 +14,14 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.firstapp.databinding.ActivityMainBinding
 
 class ExtraPriceCalculator(
     private val activity: AppCompatActivity,
-    private val sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences,
+    private val binding: ActivityMainBinding
 ) {
     private var vibration = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-
-    private val oneButton = activity.findViewById<Button>(R.id.oneButton)
-    private val twoButton = activity.findViewById<Button>(R.id.twoButton)
-    private val threeButton = activity.findViewById<Button>(R.id.threeButton)
-    private val fourButton = activity.findViewById<Button>(R.id.fourButton)
-    private val fiveButton = activity.findViewById<Button>(R.id.fiveButton)
-    private val sixButton = activity.findViewById<Button>(R.id.sixButton)
-    private val sevenButton = activity.findViewById<Button>(R.id.sevenButton)
-    private val eightButton = activity.findViewById<Button>(R.id.eightButton)
-    private val nineButton = activity.findViewById<Button>(R.id.nineButton)
-    private val zeroButton = activity.findViewById<Button>(R.id.zeroButton)
-
-    private val doteButton = activity.findViewById<Button>(R.id.doteButton)
-    private val ceButton = activity.findViewById<Button>(R.id.clearButton)
-    private val enteredPriceTextView = activity.findViewById<TextView>(R.id.myTextView)
-    private val resultTextView = activity.findViewById<TextView>(R.id.resultTextView)
-
-    private val countGroup = activity.findViewById<LinearLayout>(R.id.countGroup)
-    private val enteredCountTextView = activity.findViewById<TextView>(R.id.enteredCountTextView)
-    private val countHintTextView = activity.findViewById<TextView>(R.id.countTextView)
-
-    private val percentageRadioGroup =
-        activity.findViewById<RadioGroup>(R.id.percentageRadioGroup)
-
 
     private var currentPrice = .0
     private val currentPriceString = StringBuilder()
@@ -58,7 +36,7 @@ class ExtraPriceCalculator(
 
         override fun onFinish() {
             if (currentPriceString.toString() != "")
-                enteredPriceTextView.text = "/${currentPriceString}/"
+                binding.enteredPriceTextView?.text = "/${currentPriceString}/"
             currentPriceString.clear()
         }
     }
@@ -67,11 +45,11 @@ class ExtraPriceCalculator(
         percentage = getNumber(percentageKey)
         Log.d("perc", percentage.toString())
         when (percentage) {
-            105 -> activity.findViewById<RadioButton>(R.id.radio_5).isChecked = true
-            120 -> activity.findViewById<RadioButton>(R.id.radio_20).isChecked = true
-            125 -> activity.findViewById<RadioButton>(R.id.radio_25).isChecked = true
-            130 -> activity.findViewById<RadioButton>(R.id.radio_30).isChecked = true
-            156 -> activity.findViewById<RadioButton>(R.id.radio_56).isChecked = true
+            105 -> binding.radio5.isChecked = true
+            120 -> binding.radio20.isChecked = true
+            125 -> binding.radio25.isChecked = true
+            130 -> binding.radio30.isChecked = true
+            156 -> binding.radio56.isChecked = true
         }
     }
 
@@ -81,7 +59,7 @@ class ExtraPriceCalculator(
                 if (currentPriceString.length > 8) return
                 currentPriceString.append(newDigit)
                 currentPrice = currentPriceString.toString().toDouble()
-                enteredPriceTextView.text = currentPriceString
+                binding.enteredPriceTextView?.text = currentPriceString
                 calculateNewPrice()
             }
 
@@ -89,7 +67,7 @@ class ExtraPriceCalculator(
                 countText.append(newDigit)
                 if (countText.length > 6) return
                 count = countText.toString().toDouble()
-                enteredCountTextView.text = countText
+                binding.enteredCountTextView.text = countText
                 calculateNewPrice()
             }
         }
@@ -97,8 +75,7 @@ class ExtraPriceCalculator(
 
     }
 
-    private fun updatePrices(newDigitString: String) {
-
+    private fun updatePrices(newDigitString: String) = with(binding) {
         when (activeInputField) {
             ActiveInput.PRICE_TEXTVIEW -> {
                 if ((newDigitString == "." && currentPriceString.contains('.')) || currentPriceString.length > 8) return
@@ -106,8 +83,9 @@ class ExtraPriceCalculator(
                     currentPriceString.append("0.")
                 else currentPriceString.append(newDigitString)
                 currentPrice = currentPriceString.toString().toDouble()
-                enteredPriceTextView.text = currentPriceString
+                enteredPriceTextView?.text = currentPriceString
             }
+
 
             ActiveInput.COUNT_TEXTVIEW -> {
                 if (newDigitString == "." && countText.contains('.')) return
@@ -122,7 +100,7 @@ class ExtraPriceCalculator(
 
     private fun calculateNewPrice() {
         newPrice = currentPrice * percentage / (100.0 * count)
-        resultTextView.text = String.format("%.2f", newPrice)
+        binding.resultTextView.text = String.format("%.2f", newPrice)
     }
 
     private fun vibrate() {
@@ -134,7 +112,7 @@ class ExtraPriceCalculator(
     }
 
     fun setRadioListener() {
-        percentageRadioGroup.setOnCheckedChangeListener { _, checkedId ->
+        binding.percentageRadioGroup.setOnCheckedChangeListener { _, checkedId ->
             // get the radio group checked radio button
             activity.findViewById<RadioButton>(checkedId)?.apply {
                 // show the checked radio button's text in text view
@@ -164,35 +142,33 @@ class ExtraPriceCalculator(
         textView.setTextColor(Color.parseColor("#000000"))
     }
 
-    fun setOnClickListeners() {
-        enteredPriceTextView.setOnClickListener {
+    fun setOnClickListeners()= with(binding) {
+        enteredPriceTextView?.setOnClickListener {
             activeInputField = ActiveInput.PRICE_TEXTVIEW
             setTextviewInactiveStyle(enteredCountTextView)
-            setTextviewInactiveStyle(countHintTextView)
+            setTextviewInactiveStyle(countTextView)
             setTextviewActiveStyle(enteredPriceTextView)
             vibrate()
 
         }
         countGroup.setOnClickListener {
             setTextviewActiveStyle(enteredCountTextView)
-            setTextviewActiveStyle(countHintTextView)
-            setTextviewInactiveStyle(enteredPriceTextView)
+            setTextviewActiveStyle(countTextView)
+            setTextviewInactiveStyle(enteredPriceTextView!!)
             activeInputField = ActiveInput.COUNT_TEXTVIEW
             countText.clear()
             vibrate()
-
         }
 
         doteButton.setOnClickListener {
             vibrate()
             updatePrices(".")
         }
-        ceButton.setOnClickListener {
+        ceButton?.setOnClickListener {
             vibrate()
-
             currentPriceString.clear()
             currentPrice = .0
-            enteredPriceTextView.text = "0"
+            enteredPriceTextView?.text = "0"
             resultTextView.text = "0"
             count = 1.0
             enteredCountTextView.text = "1"
