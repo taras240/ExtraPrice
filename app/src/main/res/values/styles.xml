@@ -3,7 +3,7 @@
     <color name="mainColor">#ff6600</color>
     <color name="mainTextColor">#eeeeee</color>
 
-    <style name="digit_button_style">
+    <style name="digitButtonStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
@@ -11,6 +11,30 @@
         <item name="backgroundTintMode">add</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">36sp</item>
+    </style>
+    <style name="enteredPriceTextViewStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:background">@color/mainColor</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textAlignment">textEnd</item>
+    </style>
+    <style name="percentTextViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:background">@color/mainColor</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textAlignment">textEnd</item>
+    </style>
+    <style name="enteredCountTextViewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:background">@color/black</item>
+        <item name="android:paddingHorizontal">20dp</item>
+        <item name="android:textColor">@color/mainTextColor</item>
+        <item name="android:textAlignment">textEnd</item>
     </style>
     <style name="radioButtonStyle">
         <item name="android:layout_width">wrap_content</item>

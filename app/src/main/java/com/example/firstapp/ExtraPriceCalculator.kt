@@ -23,6 +23,8 @@ class ExtraPriceCalculator(
     private val sharedPreferences: SharedPreferences,
     private val binding: ActivityMainBinding
 ) {
+    val VIBRATE_DURATION_MILISEC = 50L
+
     private var vibration = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
     private var currentPrice = .0
@@ -43,15 +45,34 @@ class ExtraPriceCalculator(
         }
     }
 
-    fun loadSaveData() {
+    fun loadSaveData() = with(binding) {
         percentage = getNumber(percentageKey)
         Log.d("perc", percentage.toString())
         when (percentage) {
-            105 -> binding.radio5.isChecked = true
-            120 -> binding.radio20.isChecked = true
-            125 -> binding.radio25.isChecked = true
-            130 -> binding.radio30.isChecked = true
-            156 -> binding.radio56.isChecked = true
+            105 -> {
+                radio5.isChecked = true
+                percentTextView.text = "+5%"
+            }
+
+            120 -> {
+                radio20.isChecked = true
+                percentTextView.text = "+20%"
+            }
+
+            125 -> {
+                radio25.isChecked = true
+                percentTextView.text = "+25%"
+            }
+
+            130 -> {
+                radio30.isChecked = true
+                percentTextView.text = "+30%"
+            }
+
+            156 -> {
+                radio56.isChecked = true
+                percentTextView.text = "+56%"
+            }
         }
     }
 
@@ -102,25 +123,40 @@ class ExtraPriceCalculator(
 
     private fun calculateNewPrice() {
         newPrice = currentPrice * percentage / (100.0 * count)
-        binding.resultTextView.text = String.format("%.2f", newPrice)
+        binding.resultTextView.text = "=${String.format("%.2f", newPrice)}"
     }
 
     private fun vibrate() {
         if (Build.VERSION.SDK_INT >= 26) {
             timer.cancel()
             timer.start()
-            vibration.vibrate(VibrationEffect.createOneShot(75, VibrationEffect.DEFAULT_AMPLITUDE))
+            vibration.vibrate(VibrationEffect.createOneShot(VIBRATE_DURATION_MILISEC, VibrationEffect.DEFAULT_AMPLITUDE))
         }
     }
 
     fun setRadioListener() = with(binding) {
         percentageRadioGroup.setOnCheckedChangeListener { _, _ ->
             percentage = when {
-                radio5.isChecked -> 105
-                radio20.isChecked -> 120
-                radio25.isChecked -> 125
-                radio30.isChecked -> 130
-                radio56.isChecked -> 156
+                radio5.isChecked -> {
+                    percentTextView.text = "+5%"
+                    105
+                }
+                radio20.isChecked ->  {
+                    percentTextView.text = "+20%"
+                    120
+                }
+                radio25.isChecked ->  {
+                    percentTextView.text = "+25%"
+                    125
+                }
+                radio30.isChecked ->  {
+                    percentTextView.text = "+30%"
+                    130
+                }
+                radio56.isChecked ->  {
+                    percentTextView.text = "+56%"
+                    156
+                }
                 else -> 100
             }
             saveNumber(percentageKey, percentage)
@@ -145,13 +181,17 @@ class ExtraPriceCalculator(
             setTextviewInactiveStyle(enteredCountTextView)
             setTextviewInactiveStyle(countTextView)
             setTextviewActiveStyle(enteredPriceTextView)
+            setTextviewActiveStyle(percentTextView)
+
             vibrate()
 
         }
         countGroup.setOnClickListener {
             setTextviewActiveStyle(enteredCountTextView)
             setTextviewActiveStyle(countTextView)
-            setTextviewInactiveStyle(enteredPriceTextView!!)
+            setTextviewInactiveStyle(enteredPriceTextView)
+            setTextviewInactiveStyle(percentTextView)
+
             activeInputField = ActiveInput.COUNT_TEXTVIEW
             countText.clear()
             vibrate()
