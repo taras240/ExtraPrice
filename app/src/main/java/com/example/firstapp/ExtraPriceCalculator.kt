@@ -1,21 +1,13 @@
 package com.example.firstapp
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.Color
-import android.os.Build
 import android.os.CountDownTimer
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.toColor
 import com.example.firstapp.databinding.ActivityMainBinding
 
 class ExtraPriceCalculator(
@@ -25,7 +17,7 @@ class ExtraPriceCalculator(
 ) {
     val VIBRATE_DURATION_MILISEC = 50L
 
-    private var vibration = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+    private var vibration = activity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
     private var currentPrice = .0
     private val currentPriceString = StringBuilder()
@@ -40,7 +32,7 @@ class ExtraPriceCalculator(
 
         override fun onFinish() {
             if (currentPriceString.toString() != "")
-                binding.enteredPriceTextView?.text = "/${currentPriceString}/"
+                binding.enteredPriceTextView.text = "/${currentPriceString}/"
             currentPriceString.clear()
         }
     }
@@ -127,11 +119,16 @@ class ExtraPriceCalculator(
     }
 
     private fun vibrate() {
-        if (Build.VERSION.SDK_INT >= 26) {
-            timer.cancel()
-            timer.start()
-            vibration.vibrate(VibrationEffect.createOneShot(VIBRATE_DURATION_MILISEC, VibrationEffect.DEFAULT_AMPLITUDE))
-        }
+
+        timer.cancel()
+        timer.start()
+        vibration.vibrate(
+            VibrationEffect.createOneShot(
+                VIBRATE_DURATION_MILISEC,
+                VibrationEffect.DEFAULT_AMPLITUDE
+            )
+        )
+
     }
 
     fun setRadioListener() = with(binding) {
@@ -141,22 +138,27 @@ class ExtraPriceCalculator(
                     percentTextView.text = "+5%"
                     105
                 }
-                radio20.isChecked ->  {
+
+                radio20.isChecked -> {
                     percentTextView.text = "+20%"
                     120
                 }
-                radio25.isChecked ->  {
+
+                radio25.isChecked -> {
                     percentTextView.text = "+25%"
                     125
                 }
-                radio30.isChecked ->  {
+
+                radio30.isChecked -> {
                     percentTextView.text = "+30%"
                     130
                 }
-                radio56.isChecked ->  {
+
+                radio56.isChecked -> {
                     percentTextView.text = "+56%"
                     156
                 }
+
                 else -> 100
             }
             saveNumber(percentageKey, percentage)
@@ -201,11 +203,11 @@ class ExtraPriceCalculator(
             vibrate()
             updatePrices(".")
         }
-        ceButton?.setOnClickListener {
+        ceButton.setOnClickListener {
             vibrate()
             currentPriceString.clear()
             currentPrice = .0
-            enteredPriceTextView?.text = "0"
+            enteredPriceTextView.text = "0"
             resultTextView.text = "0"
             count = 1.0
             enteredCountTextView.text = "1"
