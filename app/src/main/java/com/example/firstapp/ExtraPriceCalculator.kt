@@ -176,26 +176,33 @@ class ExtraPriceCalculator(
         textView.setBackgroundResource(R.color.mainColor)
         textView.setTextColor(activity.resources.getColor(R.color.black))
     }
+    private fun setEnteredPriceFieldActive()= with(binding){
+        activeInputField = ActiveInput.PRICE_TEXTVIEW
+        setTextviewInactiveStyle(enteredCountTextView)
+        setTextviewInactiveStyle(countTextView)
+        setTextviewActiveStyle(enteredPriceTextView)
+        setTextviewActiveStyle(percentTextView)
+    }
+    private fun setEnteredPercentFieldActive() =with(binding){
+        setTextviewActiveStyle(enteredCountTextView)
+        setTextviewActiveStyle(countTextView)
+        setTextviewInactiveStyle(enteredPriceTextView)
+        setTextviewInactiveStyle(percentTextView)
 
-    fun setOnClickListeners() = with(binding) {
-        enteredPriceTextView?.setOnClickListener {
-            activeInputField = ActiveInput.PRICE_TEXTVIEW
-            setTextviewInactiveStyle(enteredCountTextView)
-            setTextviewInactiveStyle(countTextView)
-            setTextviewActiveStyle(enteredPriceTextView)
-            setTextviewActiveStyle(percentTextView)
-
+        activeInputField = ActiveInput.COUNT_TEXTVIEW
+        countText.clear()
+    }
+    fun setOnClickListeners()  = with(binding){
+        enteredPriceTextView.setOnClickListener {
+            setEnteredPriceFieldActive()
             vibrate()
-
+        }
+        percentTextView.setOnClickListener {
+            setEnteredPriceFieldActive()
+            vibrate()
         }
         countGroup.setOnClickListener {
-            setTextviewActiveStyle(enteredCountTextView)
-            setTextviewActiveStyle(countTextView)
-            setTextviewInactiveStyle(enteredPriceTextView)
-            setTextviewInactiveStyle(percentTextView)
-
-            activeInputField = ActiveInput.COUNT_TEXTVIEW
-            countText.clear()
+            setEnteredPercentFieldActive()
             vibrate()
         }
 

@@ -16,7 +16,9 @@
         android:text="0"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/percentTextView"/>
+        app:layout_constraintRight_toLeftOf="@+id/percentTextView"
+        android:clickable="true"
+        />
     <TextView
         android:id="@+id/percentTextView"
         style="@style/percentTextViewStyle"
@@ -26,6 +28,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/enteredPriceTextView"
+        android:clickable="false"
         />
     <TextView
         android:id="@+id/resultTextView"
